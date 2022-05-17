@@ -10,17 +10,17 @@ class OrganizationValidator {
     static get addOrganization() {
         return [
             body('title').isString().notEmpty(),
-            body('address').isString(),
-            body('phone').isString()
+            body('address').isString().optional({nullable: true}),
+            body('phone').isString().optional({nullable: true})
         ];
     }
 
     static get editOrganization() {
         return [
             body('id').isString().notEmpty(),
-            body('title').isString(),
-            body('address').isString(),
-            body('phone').isString()
+            body('title').isString().optional({nullable: true}),
+            body('address').isString().optional({nullable: true}),
+            body('phone').isString().optional({nullable: true})
         ];
     }
 

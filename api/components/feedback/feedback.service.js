@@ -6,6 +6,10 @@ class FeedbackService {
         return DBService.getEntityById(id, Feedback);
     }
 
+    async getAllFeedbacks() {
+        return DBService.getEntities(Feedback);
+    }
+
     async addFeedback(userId, text) {
         const data = {userId, text};
         return DBService.addEntity(data, Feedback);

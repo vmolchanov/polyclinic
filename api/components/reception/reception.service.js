@@ -1,27 +1,36 @@
 const {Reception} = require('@c/reception/reception.model');
 const {DBService} = require('@/utils/dbservice');
+const {userService} = require('../user/user.service');
 
 class ReceptionService {
     async getReception(id) {
         return DBService.getEntityById(id, Reception);
     }
 
-    async addReception({day, timeFrom, timeTo, user}) {
-        const data = {day, timeFrom, timeTo, user};
+    async getReservedTimesByDate({date, user}) {
+        const findData = {date};
+        findData.user = user;
+        const receptions = await Reception.find(findData);
+        return receptions.map(reception => reception.time)
+    }
+
+    async getAllReceptions() {
+        const receptions = await DBService.getEntities(Reception);
+
+        for (let i = 0; i < receptions.length; i++) {
+            receptions[i].user = await userService.getUser(receptions[i].user);
+        }
+
+        return receptions;
+    }
+
+    async addReception({name, email, date, time, user}) {
+        const data = {name, email, date, time, user};
         return DBService.addEntity(data, Reception);
     }
 
-    async editReception(id, {day, timeFrom, timeTo}) {
-        const data = {};
-        if (day !== undefined) {
-            data.day = day;
-        }
-        if (timeFrom !== undefined) {
-            data.timeFrom = timeFrom;
-        }
-        if (timeTo !== undefined) {
-            data.timeTo = timeTo;
-        }
+    async editReception(id, {name, email, date, time, user}) {
+        const data = {name, email, date, time, user};
         return DBService.editEntity(id, data, Reception);
     }
 

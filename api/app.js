@@ -11,8 +11,11 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(cookieParser());
 app.use(helmet());
-app.use(cors());
-app.use('/', router);
+app.use(cors({
+  credentials: true,
+  origin: 'http://localhost:8080'
+}));
+app.use('/api', router);
 app.use(errorMiddleware);
 
 module.exports = app;

@@ -1,22 +1,19 @@
 const {mongoose} = require('../../utils/mongoose');
-const {User} = require('../user/user.model');
+// const {User} = require('../user/user.model');
 
 const schema = new mongoose.Schema({
-    day: {
-        type: Number,
+    date: {
+        type: Date,
         required: true
     },
-    timeFrom: {
-        type: Number,
-        required: true
-    },
-    timeTo: {
-        type: Number,
+    time: {
+        type: String,
         required: true
     },
     user: {
         type: mongoose.ObjectId,
-        ref: User
+        ref: 'User',
+        required: true,
     },
 });
 

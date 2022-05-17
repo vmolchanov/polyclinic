@@ -1,4 +1,4 @@
-const {body, cookie} = require('express-validator');
+    const {body, cookie} = require('express-validator');
 
 class UserValidator {
     static get login() {
@@ -13,10 +13,11 @@ class UserValidator {
         return [
             cookie('refreshToken').isEmpty(),
             body('email').isString().isEmail().notEmpty(),
-            body('phone').isString().notEmpty(),
-            body('firstName').isString().required(),
-            body('lastName').isString().required(),
-            body('secondName').isString().optional(),
+            body('phone').isString().optional({nullable: true}),
+            body('firstName').isString().notEmpty(),
+            body('lastName').isString().notEmpty(),
+            body('secondName').isString().optional({nullable: true}),
+            body('cabinet').isString().optional({nullable: true}),
             body('password').isString().notEmpty(),
         ];
     }

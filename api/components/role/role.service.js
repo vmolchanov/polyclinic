@@ -6,6 +6,10 @@ class RoleService {
         return DBService.getEntityById(id, Role);
     }
 
+    async getAllRoles() {
+        return DBService.getEntities(Role);
+    }
+
     async addRole(value) {
         return DBService.addEntity({value}, Role, ['value']);
     }

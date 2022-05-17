@@ -6,6 +6,10 @@ class OrganizationService {
         return DBService.getEntityById(id, Organization);
     }
 
+    async getAllOrganizations() {
+        return DBService.getEntities(Organization);
+    }
+
     async addOrganization(title, address, phone) {
         const data = {title};
         if (address !== undefined) {

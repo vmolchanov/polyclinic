@@ -6,6 +6,7 @@ class FeedbackController extends BaseController {
         super();
 
         this.getFeedback = this.getFeedback.bind(this);
+        this.getAllFeedbacks = this.getAllFeedbacks.bind(this);
         this.addFeedback = this.addFeedback.bind(this);
         this.editFeedback = this.editFeedback.bind(this);
         this.removeFeedback = this.removeFeedback.bind(this);
@@ -15,6 +16,13 @@ class FeedbackController extends BaseController {
         this.exec(req, next, async () => {
             const feedback = await feedbackService.getFeedback(req.params.id);
             res.json(feedback);
+        });
+    }
+
+    async getAllFeedbacks(req, res, next) {
+        this.exec(req, next, async () => {
+            const feedbacks = await feedbackService.getAllFeedbacks();
+            res.json(feedbacks);
         });
     }
 

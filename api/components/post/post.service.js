@@ -6,6 +6,10 @@ class PostService {
         return DBService.getEntityById(id, Post);
     }
 
+    async getAllPosts() {
+        return DBService.getEntities(Post);
+    }
+
     async addPost(title) {
         return DBService.addEntity({title}, Post, ['title']);
     }

@@ -4,6 +4,7 @@ const {tokenService} = require('../components/token/token.service');
 const authMiddleware = (req, res, next) => {
     try {
         const {authorization} = req.headers;
+
         if (!authorization) {
             throw null;
         }

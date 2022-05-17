@@ -1,4 +1,4 @@
-const {body, param} = require('express-validator');
+const {body, param, query} = require('express-validator');
 
 class ReceptionValidator {
     static get getReception() {
@@ -7,21 +7,30 @@ class ReceptionValidator {
         ];
     }
 
+    static get getReservedTimesByDate() {
+        return [
+            param('date').isDate().notEmpty(),
+            query('user').isString().optional({nullable: true}),
+        ];
+    }
+
     static get addReception() {
         return [
-            body('day').isNumeric().notEmpty(),
-            body('timeFrom').isNumeric(),
-            body('timeTo').isNumeric(),
-            body('user').isString()
+            body('name').isString().notEmpty(),
+            body('email').isString().notEmpty(),
+            body('date').isDate().notEmpty(),
+            body('time').isString().notEmpty(),
+            body('user').isString(),
         ];
     }
 
     static get editReception() {
         return [
-            body('id').isString().notEmpty(),
-            body('day').isNumeric(),
-            body('timeFrom').isNumeric(),
-            body('timeTo').isNumeric()
+            body('name').isDate().notEmpty(),
+            body('email').isDate().notEmpty(),
+            body('date').isDate().notEmpty(),
+            body('time').isString().notEmpty(),
+            body('user').isString(),
         ];
     }
 

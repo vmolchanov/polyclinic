@@ -1,10 +1,6 @@
 const {mongoose} = require('../../utils/mongoose');
-const {User} = require('@/components/user/user.model')
 
 const schema = new mongoose.Schema({
-    user: {
-        ref: User
-    },
     text: {
         type: String,
         required: true

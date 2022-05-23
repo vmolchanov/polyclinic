@@ -1,5 +1,4 @@
 const {mongoose} = require('../../utils/mongoose');
-// const {User} = require('../user/user.model');
 
 const schema = new mongoose.Schema({
     date: {
@@ -15,6 +14,11 @@ const schema = new mongoose.Schema({
         ref: 'User',
         required: true,
     },
+    patient: {
+        type: mongoose.ObjectId,
+        ref: 'User',
+        required: true,
+    }
 });
 
 module.exports = {

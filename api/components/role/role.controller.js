@@ -1,6 +1,5 @@
 const {BaseController} = require('../../utils/router');
 const {roleService} = require('./role.service');
-const {RoleDto} = require('./role.dto');
 
 class RoleController extends BaseController {
     constructor() {
@@ -16,40 +15,35 @@ class RoleController extends BaseController {
     async getRole(req, res, next) {
         this.exec(req, next, async () => {
             const role = await roleService.getRole(req.params.id);
-            const dto = new RoleDto(role);
-            res.json(dto);
+            res.json(role);
         });
     }
 
     async getAllRoles(req, res, next) {
         this.exec(req, next, async () => {
             const roles = await roleService.getAllRoles();
-            const dtos = roles.map(role => new RoleDto(role));
-            res.json(dtos);
+            res.json(roles);
         });
     }
 
     async addRole(req, res, next) {
         this.exec(req, next, async () => {
             const role = await roleService.addRole(req.body.value);
-            const dto = new RoleDto(role);
-            res.json({status: 'success', data: dto});
+            res.json({status: 'success', data: role});
         });
     }
 
     async editRole(req, res, next) {
         this.exec(req, next, async () => {
             const role = roleService.editRole(req.body.id, req.body.value);
-            const dto = new RoleDto(role);
-            res.json({status: 'success', data: dto});
+            res.json({status: 'success', data: role});
         });
     }
 
     async removeRole(req, res, next) {
         this.exec(req, next, async () => {
             const role = roleService.removeRole(req.body.id);
-            const dto = new RoleDto(role);
-            res.json({status: 'success', data: dto});
+            res.json({status: 'success', data: role});
         });
     }
 }

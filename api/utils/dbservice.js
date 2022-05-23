@@ -30,7 +30,9 @@ class DBService {
             throw ApiError.BadRequest('Post not found');
         }
         for (let prop in data) {
-            entity[prop] = data[prop];
+            entity[prop] = data[prop] instanceof Object
+            ? data[prop].id
+            : data[prop];
         }
         await entity.save();
         return data;

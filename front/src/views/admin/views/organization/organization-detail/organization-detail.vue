@@ -2,6 +2,8 @@
   <section v-if="isContentLoaded">
     <h2>Организация</h2>
     <info-card
+      entityName="organization"
+      :entityId="domainObject.id"
       :headers="headers"
       :items="domainObject"
     />

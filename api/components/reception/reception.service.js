@@ -1,10 +1,14 @@
+const {ReceptionDto} = require('@c/reception/reception.dto');
 const {Reception} = require('@c/reception/reception.model');
 const {DBService} = require('@/utils/dbservice');
 const {userService} = require('../user/user.service');
 
 class ReceptionService {
     async getReception(id) {
-        return DBService.getEntityById(id, Reception);
+        const reception = await DBService.getEntityById(id, Reception);
+        reception.user = await userService.getUser(reception.user);
+        reception.patient = await userService.getUser(reception.patient);
+        return new ReceptionDto(reception);
     }
 
     async getReservedTimesByDate({date, user}) {
@@ -19,6 +23,7 @@ class ReceptionService {
 
         for (let i = 0; i < receptions.length; i++) {
             receptions[i].user = await userService.getUser(receptions[i].user);
+            receptions[i] = new ReceptionDto(receptions[i]);
         }
 
         return receptions;
@@ -26,16 +31,19 @@ class ReceptionService {
 
     async addReception({name, email, date, time, user}) {
         const data = {name, email, date, time, user};
-        return DBService.addEntity(data, Reception);
+        const reception = await DBService.addEntity(data, Reception);
+        return new ReceptionDto(reception);
     }
 
     async editReception(id, {name, email, date, time, user}) {
         const data = {name, email, date, time, user};
-        return DBService.editEntity(id, data, Reception);
+        const reception = await DBService.editEntity(id, data, Reception);
+        return new ReceptionDto(reception);
     }
 
     async removeReception(id) {
-        return DBService.removeEntity(id, Reception);
+        const reception = await DBService.removeEntity(id, Reception);
+        return new ReceptionDto(reception);
     }
 }
 

@@ -1,18 +1,48 @@
+const {authMiddleware} = require('@/middlewares/auth');
 const {ReceptionValidator} = require('./reception.validator');
 const {receptionController} = require('./reception.controller');
 const router = require('@/utils/router').createRouter();
 
-router.get('/', receptionController.getAllReceptions);
+router.get(
+  '/',
+  authMiddleware,
+  receptionController.getAllReceptions
+);
 
-router.get('/:id', ReceptionValidator.getReception, receptionController.getReception);
+router.get(
+  '/:id',
+  authMiddleware,
+  ReceptionValidator.getReception,
+  receptionController.getReception
+);
 
-router.get('/reserved/:date', ReceptionValidator.getReservedTimesByDate, receptionController.getReservedTimesByDate);
+router.get(
+  '/reserved/:date',
+  authMiddleware,
+  ReceptionValidator.getReservedTimesByDate,
+  receptionController.getReservedTimesByDate
+);
 
-router.post('/', ReceptionValidator.addReception, receptionController.addReception);
+router.post(
+  '/',
+  authMiddleware,
+  ReceptionValidator.addReception,
+  receptionController.addReception
+);
 
-router.put('/', ReceptionValidator.editReception, receptionController.editReception);
+router.put(
+  '/',
+  authMiddleware,
+  ReceptionValidator.editReception,
+  receptionController.editReception
+);
 
-router.delete('/', ReceptionValidator.removeReception, receptionController.removeReception);
+router.delete(
+  '/',
+  authMiddleware,
+  ReceptionValidator.removeReception,
+  receptionController.removeReception
+);
 
 module.exports.receptionRouter = router;
 

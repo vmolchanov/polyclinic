@@ -1,6 +1,6 @@
 <template>
-  <section>
-    <h2>Создать новую должность</h2>
+  <section v-if="isContentLoaded">
+    <h2>{{getTitle}}</h2>
     <v-form @submit.prevent="onFormSubmit">
       <v-text-field
         label="Наименование"
@@ -16,15 +16,36 @@ export default {
   name: 'post-edit',
   data: () => ({
     domainObject: {},
+    isContentLoaded: false,
   }),
+  created() {
+    if (this.$route.params.postId) {
+      this.$axios
+        .get(`/post/${this.$route.params.postId}`)
+        .then(r => {
+          this.domainObject = r.data;
+        });
+    } else {
+      this.isContentLoaded = true;
+    }
+  },
+  computed: {
+    getTitle() {
+      return this.$route.params.postId
+        ? 'Редактировать должность'
+        : 'Создать новую должность';
+    },
+  },
   methods: {
     onFormSubmit() {
-      this.$axios
-        .post('/post', this.domainObject)
-        .then(() => {
-          this.$router.go(-1);
-        });
-    }
+      const promise = this.$route.params.postId
+        ? this.$axios.put('/post', this.domainObject)
+        : this.$axios.post('/post', this.domainObject);
+
+      promise.then(() => {
+        this.$router.go(-1);
+      });
+    },
   },
 }
 </script>

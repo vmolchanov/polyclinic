@@ -1,4 +1,3 @@
-const {UserDto} = require('@c/user/user.dto');
 const {BaseController} = require('@/utils/router');
 const {validationResult} = require('express-validator');
 const {ApiError} = require('../../errors/api');
@@ -11,29 +10,34 @@ class UserController extends BaseController {
         this.getUser = this.getUser.bind(this);
         this.getAllUsers = this.getAllUsers.bind(this);
         this.getUsersByRole = this.getUsersByRole.bind(this);
+        this.editUser = this.editUser.bind(this);
     }
 
     async getUser(req, res, next) {
         this.exec(req, next, async () => {
             const user = await userService.getUser(req.params.id);
-            const dto = new UserDto(user);
-            res.json(dto);
+            res.json(user);
         });
     }
 
     async getAllUsers(req, res, next) {
         this.exec(req, next, async () => {
             const users = await userService.getAllUsers();
-            const dtos = users.map(user => new UserDto(user));
-            res.json(dtos);
+            res.json(users);
         });
     }
 
     async getUsersByRole(req, res, next) {
         this.exec(req, next, async () => {
             const users = await userService.getUsersByRole(req.params.role);
-            const dtos = users.map(user => new UserDto(user));
-            res.json(dtos);
+            res.json(users);
+        });
+    }
+
+    async editUser(req, res, next) {
+        this.exec(req, next, async () => {
+            const user = await userService.editUser(req.body);
+            res.json(user);
         });
     }
 

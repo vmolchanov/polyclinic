@@ -12,6 +12,12 @@
 <script>
 export default {
   name: 'Home',
+  created() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.$router.push({name: 'Catalog'});
+    }
+  },
   data: () => ({
     domainObject: {},
   }),

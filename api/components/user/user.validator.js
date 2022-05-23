@@ -1,6 +1,18 @@
     const {body, cookie} = require('express-validator');
 
 class UserValidator {
+    static get editUser() {
+        return [
+            body('id').isString().notEmpty(),
+            body('email').isString().isEmail().optional({nullable: true}),
+            body('phone').isString().optional({nullable: true}),
+            body('firstName').isString().optional({nullable: true}),
+            body('lastName').isString().optional({nullable: true}),
+            body('secondName').isString().optional({nullable: true}),
+            body('cabinet').isString().optional({nullable: true}),
+        ];
+    }
+
     static get login() {
         return [
             cookie('refreshToken').isEmpty(),

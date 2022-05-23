@@ -1,8 +1,3 @@
-const {Role} = require('../role/role.model');
-const {Organization} = require('../organization/organization.model');
-const {Post} = require('../post/post.model');
-const {Feedback} = require('../feedback/feedback.model');
-const {Reception} = require('../reception/reception.model');
 const {mongoose} = require('../../utils/mongoose');
 
 const schema = new mongoose.Schema({

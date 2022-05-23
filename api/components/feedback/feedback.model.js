@@ -8,6 +8,16 @@ const schema = new mongoose.Schema({
     date: {
         type: Date,
         default: Date.now()
+    },
+    user: {
+        type: mongoose.ObjectId,
+        ref: 'User',
+        required: true,
+    },
+    author: {
+        type: mongoose.ObjectId,
+        ref: 'User',
+        required: true,
     }
 });
 

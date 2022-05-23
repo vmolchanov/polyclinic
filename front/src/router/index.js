@@ -6,7 +6,7 @@ Vue.use(VueRouter)
 
 import Signup from '../views/signup/signup';
 import Catalog from '../views/catalog/catalog';
-import CatalogDoctorCard from '../views/catalog/views/doctor-card/doctor-card';
+import CatalogDoctorCard from '../views/doctor-card/doctor-card';
 
 // Admin
 import Admin from '../views/admin/admin';
@@ -15,9 +15,9 @@ import AdminOrganizationList from '../views/admin/views/organization/organizatio
 import AdminOrganizationEdit from '../views/admin/views/organization/organization-edit/organization-edit';
 import AdminOrganizationDetail from '../views/admin/views/organization/organization-detail/organization-detail';
 
-// import AdminPersonList from '../views/admin/views/person/person-list/person-list';
-// import AdminPersonEdit from '../views/admin/views/person/person-edit/person-edit';
-// import AdminPersonDetail from '../views/admin/views/person/person-detail/person-detail';
+import AdminPersonList from '../views/admin/views/person/person-list/person-list';
+import AdminPersonEdit from '../views/admin/views/person/person-edit/person-edit';
+import AdminPersonDetail from '../views/admin/views/person/person-detail/person-detail';
 
 import AdminPostList from '../views/admin/views/post/post-list/post-list';
 import AdminPostEdit from '../views/admin/views/post/post-edit/post-edit';
@@ -64,25 +64,35 @@ const routes = [
         component: AdminOrganizationEdit,
       },
       {
+        path: 'organization/:organizationId/edit',
+        name: 'OrganizationEdit',
+        component: AdminOrganizationEdit,
+      },
+      {
         path: 'organization/:organizationId/view',
         name: 'OrganizationDetail',
         component: AdminOrganizationDetail,
       },
-      // {
-      //   path: 'person',
-      //   name: 'PersonList',
-      //   component: AdminPersonList,
-      // },
-      // {
-      //   path: 'person/new',
-      //   name: 'PersonNew',
-      //   component: AdminPersonEdit,
-      // },
-      // {
-      //   path: 'person/:personId/view',
-      //   name: 'PersonDetail',
-      //   component: AdminPersonDetail,
-      // },
+      {
+        path: 'person',
+        name: 'PersonList',
+        component: AdminPersonList,
+      },
+      {
+        path: 'person/new',
+        name: 'PersonNew',
+        component: AdminPersonEdit,
+      },
+      {
+        path: 'person/:personId/edit',
+        name: 'PersonEdit',
+        component: AdminPersonEdit,
+      },
+      {
+        path: 'person/:personId/view',
+        name: 'PersonDetail',
+        component: AdminPersonDetail,
+      },
       {
         path: 'post',
         name: 'PostList',
@@ -91,6 +101,11 @@ const routes = [
       {
         path: 'post/new',
         name: 'PostNew',
+        component: AdminPostEdit,
+      },
+      {
+        path: 'post/:postId/edit',
+        name: 'PostEdit',
         component: AdminPostEdit,
       },
       {
@@ -106,6 +121,11 @@ const routes = [
       {
         path: 'role/new',
         name: 'RoleNew',
+        component: AdminRoleEdit,
+      },
+      {
+        path: 'role/:roleId/edit',
+        name: 'RoleEdit',
         component: AdminRoleEdit,
       },
       {

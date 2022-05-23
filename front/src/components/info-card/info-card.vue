@@ -11,6 +11,7 @@
     </v-row>
     <v-divider class="info-card__bottom-divider" />
     <v-btn text @click="onBackButtonClick">Назад</v-btn>
+    <v-btn text @click="onEditClick">Изменить</v-btn>
   </div>
 </template>
 
@@ -18,6 +19,14 @@
 export default {
   name: 'info-card',
   props: {
+    entityName: {
+      type: String,
+      required: true,
+    },
+    entityId: {
+      type: String,
+      required: true,
+    },
     items: {
       type: Object,
       required: true,
@@ -43,6 +52,14 @@ export default {
   methods: {
     onBackButtonClick() {
       this.$router.go(-1);
+    },
+    onEditClick() {
+      this.$router.push({
+        name: `${this.entityName[0].toUpperCase()}${this.entityName.slice(1)}Edit`,
+        params: {
+          [`${this.entityName}Id`]: this.entityId,
+        },
+      });
     }
   },
 }

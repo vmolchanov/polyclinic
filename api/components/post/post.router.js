@@ -1,15 +1,16 @@
+const {authMiddleware} = require('@/middlewares/auth');
 const router = require('../../utils/router').createRouter();
 const {postController} = require('./post.controller');
 const {PostValidator} = require('./post.validator');
 
-router.get('/', postController.getAllPosts);
+router.get('/', authMiddleware, postController.getAllPosts);
 
-router.get('/:id', PostValidator.getPost, postController.getPost);
+router.get('/:id', authMiddleware, PostValidator.getPost, postController.getPost);
 
-router.post('/', PostValidator.addPost, postController.addPost);
+router.post('/', authMiddleware, PostValidator.addPost, postController.addPost);
 
-router.put('/', PostValidator.editPost, postController.editPost);
+router.put('/', authMiddleware, PostValidator.editPost, postController.editPost);
 
-router.delete('/', PostValidator.removePost, postController.removePost);
+router.delete('/', authMiddleware, PostValidator.removePost, postController.removePost);
 
 module.exports.postRouter = router;

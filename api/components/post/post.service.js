@@ -1,25 +1,31 @@
+const {PostDto} = require('@c/post/post.dto');
 const {Post} = require('./post.model');
 const {DBService} = require('../../utils/dbservice');
 
 class PostService {
     async getPost(id) {
-        return DBService.getEntityById(id, Post);
+        return new PostDto(await DBService.getEntityById(id, Post));
     }
 
     async getAllPosts() {
-        return DBService.getEntities(Post);
+        const posts = await DBService.getEntities(Post);
+        return posts.map(post => new PostDto(post));
     }
 
     async addPost(title) {
-        return DBService.addEntity({title}, Post, ['title']);
+        return new PostDto(
+          await DBService.addEntity({title}, Post, ['title'])
+        );
     }
 
     async editPost(id, title) {
-        return DBService.editEntity(id, {title}, Post);
+        return new PostDto(
+          await DBService.editEntity(id, {title}, Post)
+        );
     }
 
     async removePost(id) {
-        return DBService.removeEntity(id, Post);
+        return new PostDto(await DBService.removeEntity(id, Post));
     }
 }
 

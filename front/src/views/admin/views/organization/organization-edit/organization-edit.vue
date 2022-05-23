@@ -1,6 +1,6 @@
 <template>
-  <section>
-    <h2>Создать новую организацию</h2>
+  <section v-if="isContentLoaded">
+    <h2>{{getTitle}}</h2>
     <v-form @submit.prevent="onFormSubmit">
       <v-text-field
         label="Наименование"
@@ -24,14 +24,36 @@ export default {
   name: 'organization-edit',
   data: () => ({
     domainObject: {},
+    isContentLoaded: false,
   }),
+  created() {
+    if (this.$route.params.organizationId) {
+      this.$axios
+        .get(`/organization/${this.$route.params.organizationId}`)
+        .then(r => {
+          this.domainObject = r.data;
+          this.isContentLoaded = true;
+        });
+    } else {
+      this.isContentLoaded = true;
+    }
+  },
+  computed: {
+    getTitle() {
+      return this.$route.params.organizationId
+        ? 'Редактировать организацию'
+        : 'Создать новую организацию';
+    }
+  },
   methods: {
     onFormSubmit() {
-      this.$axios
-        .post('/organization', this.domainObject)
-        .then(() => {
-          this.$router.go(-1);
-        });
+      const promise = this.$route.params.organizationId
+        ? this.$axios.put('/organization', this.domainObject)
+        : this.$axios.post('/organization', this.domainObject);
+
+      promise.then(() => {
+        this.$router.go(-1);
+      });
     }
   },
 }

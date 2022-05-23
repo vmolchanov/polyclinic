@@ -1,6 +1,5 @@
 const {receptionService} = require('@c/reception/reception.service');
 const {BaseController} = require('@/utils/router');
-const {ReceptionDto} = require('./reception.dto');
 
 class ReceptionController extends BaseController {
     constructor() {
@@ -17,16 +16,14 @@ class ReceptionController extends BaseController {
     async getReception(req, res, next) {
         this.exec(req, next, async () => {
             const reception = await receptionService.getReception(req.params.id);
-            const dto = new ReceptionDto(reception);
-            res.json(dto);
+            res.json(reception);
         });
     }
 
     async getAllReceptions(req, res, next) {
         this.exec(req, next, async () => {
             const receptions = await receptionService.getAllReceptions();
-            const dtos = receptions.map(reception => new ReceptionDto(reception));
-            res.json(dtos);
+            res.json(receptions);
         });
     }
 
@@ -43,24 +40,21 @@ class ReceptionController extends BaseController {
     async addReception(req, res, next) {
         this.exec(req, next, async () => {
             const reception = await receptionService.addReception(req.body);
-            const dto = new ReceptionDto(reception);
-            res.json({status: 'success', data: dto});
+            res.json({status: 'success', data: reception});
         });
     }
 
     async editReception(req, res, next) {
         this.exec(req, next, async () => {
             const reception = await receptionService.editReception(req.body.id, req.body);
-            const dto = new ReceptionDto(reception);
-            res.json({status: 'success', data: dto});
+            res.json({status: 'success', data: reception});
         });
     }
 
     async removeReception(req, res, next) {
         this.exec(req, next, async () => {
             const reception = await receptionService.removeReception(req.body.id);
-            const dto = new ReceptionDto(reception);
-            res.json({status: 'success', data: dto});
+            res.json({status: 'success', data: reception});
         });
     }
 }

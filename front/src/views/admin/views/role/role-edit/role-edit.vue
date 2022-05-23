@@ -1,6 +1,6 @@
 <template>
-  <section>
-    <h2>Создать новую роль</h2>
+  <section v-if="isContentLoaded">
+    <h2>{{getTitle}}</h2>
     <v-form @submit.prevent="onFormSubmit">
       <v-text-field
         label="Наименование"
@@ -16,15 +16,37 @@ export default {
   name: 'role-edit',
   data: () => ({
     domainObject: {},
+    isContentLoaded: false,
   }),
+  created() {
+    if (this.$route.params.roleId) {
+      this.$axios
+        .get(`/role/${this.$route.params.roleId}`)
+        .then(r => {
+          this.domainObject = r.data;
+          this.isContentLoaded = true;
+        });
+    } else {
+      this.isContentLoaded = true;
+    }
+  },
+  computed: {
+    getTitle() {
+      return this.$route.params.roleId
+        ? 'Редактировать роль'
+        : 'Создать новую роль';
+    },
+  },
   methods: {
     onFormSubmit() {
-      this.$axios
-        .post('/role', this.domainObject)
-        .then(() => {
-          this.$router.go(-1);
-        });
-    }
+      const promise = this.$route.params.roleId
+        ? this.$axios.put('/role', this.domainObject)
+        : this.$axios.post('/role', this.domainObject);
+
+      promise.then(() => {
+        this.$router.go(-1);
+      });
+    },
   },
 }
 </script>

@@ -7,14 +7,14 @@
     />
     <div v-else>
       <div class="buttons-block">
-        <router-link :to="{name: 'PostNew'}">Добавить</router-link>
+        <router-link :to="{name: 'PersonNew'}">Добавить</router-link>
       </div>
       <p v-if="domainObjects.length === 0">Нет данных</p>
       <data-table
         v-else
         :items="domainObjects"
         :headers="headers"
-        entityName="post"
+        entityName="person"
       />
     </div>
   </section>
@@ -28,7 +28,9 @@ export default {
     domainObjects: null,
     isContentLoaded: false,
     headers: [
-      {text: 'Наименование', value: 'title'},
+      {text: 'ФИО', value: 'fullName'},
+      {text: 'Email', value: 'email'},
+      {text: 'role', value: 'role.value'},
     ],
   }),
   created() {
@@ -36,8 +38,16 @@ export default {
       .get('/user')
       .then(r => {
         this.domainObjects = r.data;
+        this.domainObjects.forEach(domainObject => {
+          domainObject.fullName = this.getFullName(domainObject);
+        });
         this.isContentLoaded = true;
       });
+  },
+  methods: {
+    getFullName({firstName, lastName, secondName}) {
+      return `${lastName} ${firstName[0]}.${secondName ? secondName[0] + '.' : ''}`;
+    }
   },
 };
 

@@ -1,6 +1,5 @@
 const {BaseController} = require('../../utils/router');
 const {postService} = require('./post.service');
-const {PostDto} = require('./post.dto');
 
 class PostController extends BaseController {
     constructor() {
@@ -16,40 +15,35 @@ class PostController extends BaseController {
     async getPost(req, res, next) {
         this.exec(req, next, async () => {
             const post = await postService.getPost(req.params.id);
-            const dto = new PostDto(post);
-            res.json(dto);
+            res.json(post);
         });
     }
 
     async getAllPosts(req, res, next) {
         this.exec(req, next, async () => {
             const posts = await postService.getAllPosts();
-            const dtos = posts.map(post => new PostDto(post));
-            res.json(dtos);
+            res.json(posts);
         });
     }
 
     async addPost(req, res, next) {
         this.exec(req, next, async () => {
             const post = await postService.addPost(req.body.title);
-            const dto = new PostDto(post);
-            res.json({type: 'success', data: dto});
+            res.json({type: 'success', data: post});
         });
     }
 
     async editPost(req, res, next) {
         this.exec(req, next, async () => {
             const post = await postService.editPost(req.body.id, req.body.title);
-            const dto = new PostDto(post);
-            res.json({type: 'success', data: dto});
+            res.json({type: 'success', data: post});
         });
     }
 
     async removePost(req, res, next) {
         this.exec(req, next, async () => {
             const post = await postService.removePost(req.body.id);
-            const dto = new PostDto(post);
-            res.json({status: 'success', data: dto});
+            res.json({status: 'success', data: post});
         });
     }
 }

@@ -1,13 +1,15 @@
+const {OrganizationDto} = require('@c/organization/organization.dto');
 const {Organization} = require('./organization.model');
 const {DBService} = require('../../utils/dbservice');
 
 class OrganizationService {
     async getOrganization(id) {
-        return DBService.getEntityById(id, Organization);
+        return new OrganizationDto(await DBService.getEntityById(id, Organization));
     }
 
     async getAllOrganizations() {
-        return DBService.getEntities(Organization);
+        const organizations = await DBService.getEntities(Organization);
+        return organizations.map(organization => new OrganizationDto(organization));
     }
 
     async addOrganization(title, address, phone) {
@@ -18,7 +20,7 @@ class OrganizationService {
         if (phone !== undefined) {
             data.phone = phone;
         }
-        return DBService.addEntity(data, Organization);
+        return new OrganizationDto(await DBService.addEntity(data, Organization));
     }
 
     async editOrganization(id, title, address, phone) {
@@ -32,11 +34,11 @@ class OrganizationService {
         if (phone !== undefined) {
             data.phone = phone;
         }
-        return DBService.editEntity(id, data, Organization);
+        return new OrganizationDto(await DBService.editEntity(id, data, Organization));
     }
 
     async removeOrganization(id) {
-        return DBService.removeEntity(id, Organization);
+        return new OrganizationDto(await DBService.removeEntity(id, Organization));
     }
 }
 

@@ -33,7 +33,7 @@
           offset-y
           min-width="auto"
         >
-          <template v-slot:activator="{ on, attrs }">
+          <template v-slot:activator="{on, attrs}">
             <v-text-field
               v-model="domainObject.date"
               label="Дата"
@@ -47,7 +47,8 @@
 
         <TimeChooser v-if="domainObject.date" v-model="domainObject.time" :reservedTimes="[]"/>
 
-        <v-btn type="submit">Записаться</v-btn>
+        <v-btn class="mr-4" @click="onBackButtonClick">В каталог</v-btn>
+        <v-btn color="green" type="submit">Записаться</v-btn>
       </v-form>
     </section>
   </v-container>
@@ -89,6 +90,9 @@ export default {
           },
         });
     },
+    onBackButtonClick() {
+      this.$router.push({name: 'Catalog'});
+    }
   },
 }
 </script>

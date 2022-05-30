@@ -1,16 +1,19 @@
 <template>
     <div class="admin">
+      <admin-header/>
       <sidebar class="admin__sidebar"/>
       <router-view class="admin__content"/>
     </div>
 </template>
 
 <script>
+import AdminHeader from './components/admin-header/admin-header';
 import Sidebar from './components/sidebar/sidebar';
 
 export default {
   name: 'admin',
   components: {
+    AdminHeader,
     Sidebar,
   },
 };

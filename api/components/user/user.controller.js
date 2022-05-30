@@ -10,6 +10,7 @@ class UserController extends BaseController {
         this.getUser = this.getUser.bind(this);
         this.getAllUsers = this.getAllUsers.bind(this);
         this.getUsersByRole = this.getUsersByRole.bind(this);
+        this.getCurrentUser = this.getCurrentUser.bind(this);
         this.editUser = this.editUser.bind(this);
     }
 
@@ -31,6 +32,13 @@ class UserController extends BaseController {
         this.exec(req, next, async () => {
             const users = await userService.getUsersByRole(req.params.role);
             res.json(users);
+        });
+    }
+
+    async getCurrentUser(req, res, next) {
+        this.exec(req, next, async () => {
+            const user = await userService.getCurrentUser(req.headers.authorization.split(' ')[1]);
+            res.json(user);
         });
     }
 

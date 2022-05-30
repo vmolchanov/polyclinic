@@ -65,10 +65,10 @@ export default {
 
 <style scoped>
   .free {
-    background-color: red !important;
+    background-color: #dbb44f !important;
   }
 
   .choosed {
-    background-color: green !important;
+    background-color: #2aa22a !important;
   }
 </style>

@@ -24,6 +24,7 @@ export default {
         .get(`/post/${this.$route.params.postId}`)
         .then(r => {
           this.domainObject = r.data;
+          this.isContentLoaded = true;
         });
     } else {
       this.isContentLoaded = true;

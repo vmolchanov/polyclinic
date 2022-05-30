@@ -1,6 +1,6 @@
 class UserDto {
   constructor({
-    id,
+    _id,
     lastName,
     firstName,
     secondName = null,
@@ -12,7 +12,7 @@ class UserDto {
     post = null,
     feedbacks = null,
   }) {
-    this.id = id;
+    this.id = _id;
     this.lastName = lastName;
     this.firstName = firstName;
     this.secondName = secondName;

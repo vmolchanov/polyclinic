@@ -12,10 +12,18 @@ class ReceptionService {
     }
 
     async getReservedTimesByDate({date, user}) {
-        const findData = {date};
-        findData.user = user;
+        const findData = {date, user};
         const receptions = await Reception.find(findData);
-        return receptions.map(reception => reception.time)
+
+        for (let i = 0; i < receptions.length; i++) {
+            receptions[i] = new ReceptionDto({
+                ...receptions[i].toObject(),
+                user: await userService.getUser(receptions[i].user),
+                patient: await userService.getUser(receptions[i].patient),
+            });
+        }
+
+        return receptions;
     }
 
     async getAllReceptions() {
@@ -29,8 +37,7 @@ class ReceptionService {
         return receptions;
     }
 
-    async addReception({name, email, date, time, user}) {
-        const data = {name, email, date, time, user};
+    async addReception(data) {
         const reception = await DBService.addEntity(data, Reception);
         return new ReceptionDto(reception);
     }

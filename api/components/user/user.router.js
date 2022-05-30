@@ -5,6 +5,7 @@ const {userController} = require('./user.controller');
 
 router.get('/', authMiddleware, userController.getAllUsers);
 router.get('/role/:role', authMiddleware, userController.getUsersByRole);
+router.get('/current', authMiddleware, userController.getCurrentUser);
 router.get('/:id', authMiddleware, userController.getUser);
 router.put('/', authMiddleware, UserValidator.editUser, userController.editUser);
 

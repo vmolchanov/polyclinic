@@ -25,9 +25,16 @@ export default {
       type: String,
       required: true,
     },
+    noRowClick: {
+      type: Boolean,
+      default: false,
+    },
   },
   methods: {
     onRowClick({id}) {
+      if (this.noRowClick) {
+        return;
+      }
       this.$router.push({
         name: `${this.entityName[0].toUpperCase() + this.entityName.slice(1)}Detail`,
         params: {

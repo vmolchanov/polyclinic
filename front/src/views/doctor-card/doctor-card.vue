@@ -45,7 +45,7 @@
           <v-date-picker v-model="domainObject.date" @input="onDateInput"/>
         </v-menu>
 
-        <TimeChooser v-if="domainObject.date" v-model="domainObject.time" :reservedTimes="[]"/>
+        <TimeChooser v-if="isShowTimeChooser" v-model="domainObject.time" :reservedTimes="reservedTimes"/>
 
         <v-btn class="mr-4" @click="onBackButtonClick">В каталог</v-btn>
         <v-btn color="green" type="submit">Записаться</v-btn>
@@ -63,15 +63,25 @@ export default {
     TimeChooser,
   },
   created() {
-    this.$axios(`/user/${this.$route.params.userId}`)
-      .then(r => {
-        this.doctor = r.data;
-      });
+    Promise.all([
+      this.$axios(`/user/${this.$route.params.userId}`),
+      this.$axios(`/user/current`)
+    ]).then(([doctorResponse, currentUserResponse]) => {
+      this.doctor = doctorResponse.data;
+      this.currentUser = currentUserResponse.data;
+
+      const {lastName, firstName, secondName, email} = this.currentUser;
+      this.domainObject.name = `${lastName} ${firstName}${secondName ? ' ' + secondName : ''}`;
+      this.domainObject.email = email;
+    });
   },
   data: () => ({
     menu2: false,
     doctor: null,
     domainObject: {},
+    currentUser: null,
+    reservedTimes: [],
+    isShowTimeChooser: false,
   }),
   methods: {
     onFormSubmit() {
@@ -79,15 +89,19 @@ export default {
         .post('/reception', {
           ...this.domainObject,
           user: this.$route.params.userId,
+          patient: this.currentUser.id,
         });
     },
     onDateInput(date) {
       this.menu2 = false;
+      const params = {
+        user: this.$route.params.userId,
+      };
       this.$axios
-        .get(`/reception/reserved/${date}`, {
-          params: {
-            user: this.$route.params.userId,
-          },
+        .get(`/reception/reserved/${date}`, {params})
+        .then(r => {
+          this.reservedTimes = r.data.map(reception => reception.time);
+          this.isShowTimeChooser = true;
         });
     },
     onBackButtonClick() {

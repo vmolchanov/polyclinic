@@ -6,9 +6,11 @@ class ReceptionController extends BaseController {
         super();
 
         this.getReception = this.getReception.bind(this);
+        this.getAllReceptions = this.getAllReceptions.bind(this);
         this.addReception = this.addReception.bind(this);
         this.editReception = this.editReception.bind(this);
         this.removeReception = this.removeReception.bind(this);
+        this.getReservedTimesByDate = this.getReservedTimesByDate.bind(this);
     }
 
     async getReception(req, res, next) {
@@ -18,25 +20,33 @@ class ReceptionController extends BaseController {
         });
     }
 
+    async getAllReceptions(req, res, next) {
+        this.exec(req, next, async () => {
+            const receptions = await receptionService.getAllReceptions();
+            res.json(receptions);
+        });
+    }
+
+    async getReservedTimesByDate(req, res, next) {
+        this.exec(req, next, async () => {
+            const times = await receptionService.getReservedTimesByDate({
+                ...req.params,
+                ...req.query,
+            });
+            res.json(times);
+        });
+    }
+
     async addReception(req, res, next) {
         this.exec(req, next, async () => {
-            const reception = await receptionService.addReception({
-                day: req.body.day,
-                timeFrom: req.body.timeFrom,
-                timeTo: req.body.timeTo,
-                user: req.body.user,
-            });
+            const reception = await receptionService.addReception(req.body);
             res.json({status: 'success', data: reception});
         });
     }
 
     async editReception(req, res, next) {
         this.exec(req, next, async () => {
-            const reception = await receptionService.editReception(req.body.id, {
-                day: req.body.day,
-                timeFrom: req.body.timeFrom,
-                timeTo: req.body.timeTo,
-            });
+            const reception = await receptionService.editReception(req.body.id, req.body);
             res.json({status: 'success', data: reception});
         });
     }

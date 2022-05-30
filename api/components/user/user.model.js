@@ -1,8 +1,3 @@
-const {Role} = require('../role/role.model');
-const {Organization} = require('../organization/organization.model');
-const {Post} = require('../post/post.model');
-const {Feedback} = require('../feedback/feedback.model');
-const {Reception} = require('../reception/reception.model');
 const {mongoose} = require('../../utils/mongoose');
 
 const schema = new mongoose.Schema({
@@ -26,9 +21,6 @@ const schema = new mongoose.Schema({
         type: String,
         unique: true
     },
-    photo: {
-        type: String,
-    },
     cabinet: {
         type: Number
     },
@@ -38,23 +30,19 @@ const schema = new mongoose.Schema({
     },
     role: {
         type: mongoose.ObjectId,
-        ref: Role
+        ref: 'Role'
     },
     organization: {
         type: mongoose.ObjectId,
-        ref: Organization
+        ref: 'Organization'
     },
     post: {
         type: mongoose.ObjectId,
-        ref: Post
-    },
-    receptions: {
-        type: [mongoose.ObjectId],
-        ref: Reception
+        ref: 'Post'
     },
     feedbacks: {
         type: [mongoose.ObjectId],
-        ref: Feedback
+        ref: 'Feedback'
     },
 });
 

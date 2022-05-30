@@ -1,13 +1,16 @@
-import {RoleValidator} from './role.validator';
+const {RoleValidator} = require('./role.validator');
 const router = require('../../utils/router').createRouter();
 const {roleController} = require('./role.controller');
+const {authMiddleware} = require('../../middlewares/auth');
 
-router.get('/:id', RoleValidator.getRole, roleController.getRole);
+router.get('/', authMiddleware, roleController.getAllRoles);
 
-router.post('/', RoleValidator.addRole, roleController.addRole);
+router.get('/:id', authMiddleware, RoleValidator.getRole, roleController.getRole);
 
-router.put('/', RoleValidator.editRole, roleController.editRole);
+router.post('/', authMiddleware, RoleValidator.addRole, roleController.addRole);
 
-router.delete('/', RoleValidator.removeRole, roleController.removeRole);
+router.put('/', authMiddleware, RoleValidator.editRole, roleController.editRole);
+
+router.delete('/', authMiddleware, RoleValidator.removeRole, roleController.removeRole);
 
 module.exports.roleRouter = router;

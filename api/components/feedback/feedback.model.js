@@ -1,10 +1,6 @@
 const {mongoose} = require('../../utils/mongoose');
-const {User} = require('@/components/user/user.model')
 
 const schema = new mongoose.Schema({
-    user: {
-        ref: User
-    },
     text: {
         type: String,
         required: true
@@ -12,6 +8,16 @@ const schema = new mongoose.Schema({
     date: {
         type: Date,
         default: Date.now()
+    },
+    user: {
+        type: mongoose.ObjectId,
+        ref: 'User',
+        required: true,
+    },
+    author: {
+        type: mongoose.ObjectId,
+        ref: 'User',
+        required: true,
     }
 });
 

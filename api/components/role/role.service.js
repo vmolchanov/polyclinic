@@ -1,21 +1,31 @@
+const {RoleDto} = require('@c/role/role.dto');
 const {Role} = require('./role.model');
 const {DBService} = require('../../utils/dbservice');
 
 class RoleService {
     async getRole(id) {
-        return DBService.getEntityById(id, Role);
+        return new RoleDto(await DBService.getEntityById(id, Role));
+    }
+
+    async getAllRoles() {
+        const roles = await DBService.getEntities(Role);
+        return roles.map(role => new RoleDto(role));
     }
 
     async addRole(value) {
-        return DBService.addEntity({value}, Role, ['value']);
+        return new RoleDto(
+          await DBService.addEntity({value}, Role, ['value'])
+        );
     }
 
     async editRole(id, value) {
-        return DBService.editEntity(id, {value}, Role);
+        return new RoleDto(
+          await DBService.editEntity(id, {value}, Role)
+        );
     }
 
     async removeRole(id) {
-        return DBService.removeEntity(id, Role);
+        return new RoleDto(await DBService.removeEntity(id, Role));
     }
 }
 

@@ -1,4 +1,4 @@
-const {BaseController} = require('@/');
+const {BaseController} = require('../../utils/router');
 const {organizationService} = require('./organization.service');
 
 class OrganizationController extends BaseController {
@@ -6,6 +6,7 @@ class OrganizationController extends BaseController {
         super();
 
         this.getOrganization = this.getOrganization.bind(this);
+        this.getAllOrganizations = this.getAllOrganizations.bind(this);
         this.addOrganization = this.addOrganization.bind(this);
         this.editOrganization = this.editOrganization.bind(this);
         this.removeOrganization = this.removeOrganization.bind(this);
@@ -15,6 +16,13 @@ class OrganizationController extends BaseController {
         this.exec(req, next, async () => {
             const organization = await organizationService.getOrganization(req.params.id);
             res.json(organization);
+        });
+    }
+
+    async getAllOrganizations(req, res, next) {
+        this.exec(req, next, async () => {
+            const organizations = await organizationService.getAllOrganizations();
+            res.json(organizations);
         });
     }
 

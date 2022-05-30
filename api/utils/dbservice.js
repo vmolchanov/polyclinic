@@ -5,6 +5,10 @@ class DBService {
         return Model.findById(id);
     }
 
+    static async getEntities(Model) {
+        return Model.find();
+    }
+
     static async addEntity(data, Model, uniqueFields = []) {
         for (let i = 0; i < uniqueFields.length; i++) {
             const field = uniqueFields[i];
@@ -26,7 +30,9 @@ class DBService {
             throw ApiError.BadRequest('Post not found');
         }
         for (let prop in data) {
-            entity[prop] = data[prop];
+            entity[prop] = data[prop] instanceof Object
+            ? data[prop].id
+            : data[prop];
         }
         await entity.save();
         return data;

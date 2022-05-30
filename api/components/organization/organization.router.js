@@ -1,13 +1,40 @@
+const {authMiddleware} = require('@/middlewares/auth');
 const {OrganizationValidator} = require('./organization.validator');
 const {organizationController} = require('./organization.controller');
 const router = require('../../utils/router').createRouter();
 
-router.get('/:id', OrganizationValidator.getOrganization, organizationController.getOrganization);
+router.get(
+  '/',
+  authMiddleware,
+  organizationController.getAllOrganizations
+);
 
-router.post('/', OrganizationValidator.addOrganization, organizationController.addOrganization);
+router.get(
+  '/:id',
+  authMiddleware,
+  OrganizationValidator.getOrganization,
+  organizationController.getOrganization
+);
 
-router.put('/', OrganizationValidator.editOrganization, organizationController.editOrganization);
+router.post(
+  '/',
+  authMiddleware,
+  OrganizationValidator.addOrganization,
+  organizationController.addOrganization
+);
 
-router.delete('/', OrganizationValidator.removeOrganization, organizationController.removeOrganization);
+router.put(
+  '/',
+  authMiddleware,
+  OrganizationValidator.editOrganization,
+  organizationController.editOrganization
+);
+
+router.delete(
+  '/',
+  authMiddleware,
+  OrganizationValidator.removeOrganization,
+  organizationController.removeOrganization
+);
 
 module.exports.organizationRouter = router;

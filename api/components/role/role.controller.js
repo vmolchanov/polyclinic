@@ -5,6 +5,7 @@ class RoleController extends BaseController {
     constructor() {
         super();
         this.getRole = this.getRole.bind(this);
+        this.getAllRoles = this.getAllRoles.bind(this);
         this.addRole = this.addRole.bind(this);
         this.editRole = this.editRole.bind(this);
         this.editRole = this.editRole.bind(this);
@@ -15,6 +16,13 @@ class RoleController extends BaseController {
         this.exec(req, next, async () => {
             const role = await roleService.getRole(req.params.id);
             res.json(role);
+        });
+    }
+
+    async getAllRoles(req, res, next) {
+        this.exec(req, next, async () => {
+            const roles = await roleService.getAllRoles();
+            res.json(roles);
         });
     }
 

@@ -1,6 +1,6 @@
 const {body, param} = require('express-validator');
 
-export class RoleValidator {
+class RoleValidator {
     static get getRole() {
         return [
             param('id').isString().notEmpty()

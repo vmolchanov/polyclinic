@@ -1,13 +1,16 @@
+const {authMiddleware} = require('@/middlewares/auth');
 const {feedbackController} = require('./feedback.controller');
 const {FeedbackValidator} = require('./feedback.validator');
 const router = require('../../utils/router').createRouter();
 
-router.get('/:id', FeedbackValidator.getFeedback, feedbackController.getFeedback);
+router.get('/', authMiddleware, feedbackController.getAllFeedbacks);
 
-router.post('/', FeedbackValidator.addFeedback, feedbackController.addFeedback);
+router.get('/:id', authMiddleware, FeedbackValidator.getFeedback, feedbackController.getFeedback);
 
-router.put('/', FeedbackValidator.editFeedback, feedbackController.editFeedback);
+router.post('/', authMiddleware, FeedbackValidator.addFeedback, feedbackController.addFeedback);
 
-router.delete('/', FeedbackValidator.removeFeedback, feedbackController.removeFeedback);
+router.put('/', authMiddleware, FeedbackValidator.editFeedback, feedbackController.editFeedback);
 
-module.exports.organizationRouter = router;
+router.delete('/', authMiddleware, FeedbackValidator.removeFeedback, feedbackController.removeFeedback);
+
+module.exports.feedbackRouter = router;

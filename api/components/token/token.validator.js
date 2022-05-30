@@ -15,7 +15,6 @@ class TokenValidator {
 
     static get editToken() {
         return [
-            body('userId').isString().notEmpty(),
         ];
     }
 

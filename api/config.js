@@ -15,5 +15,10 @@ module.exports = {
     jwt: {
         accessSecret: 'kfshdjerJGYUgfdhj78yufhesjf327574jfdkshrefsJGHhj',
         refreshSecret: '86734tryesfgDDhjt5TYR8678GHJGdfdgDSRr4tryfCGFDS'
-    }
+    },
+    corsWhitelist: [
+        'http://localhost:8080',
+        'http://localhost:3000',
+        'http://localhost:8085'
+    ],
 };

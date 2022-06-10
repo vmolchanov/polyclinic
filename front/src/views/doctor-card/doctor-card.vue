@@ -90,6 +90,10 @@ export default {
           ...this.domainObject,
           user: this.$route.params.userId,
           patient: this.currentUser.id,
+        })
+        .then(() => {
+          alert('Вы были успешно записаны к врачу');
+          this.$router.push({name: 'Catalog'});
         });
     },
     onDateInput(date) {
@@ -102,6 +106,7 @@ export default {
         .then(r => {
           this.reservedTimes = r.data.map(reception => reception.time);
           this.isShowTimeChooser = true;
+          this.domainObject.time = null;
         });
     },
     onBackButtonClick() {

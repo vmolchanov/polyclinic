@@ -25,11 +25,7 @@ export default {
     choosedTimes: {},
   }),
   created() {
-    this.getTimes.forEach(time => {
-      if (!this.reservedTimes.includes(time)) {
-        this.choosedTimes[time] = false;
-      }
-    });
+    this.initChoosedTimes();
   },
   computed: {
     getTimes() {
@@ -42,6 +38,14 @@ export default {
     }
   },
   methods: {
+    initChoosedTimes() {
+      this.choosedTimes = {};
+      this.getTimes.forEach(time => {
+        if (!this.reservedTimes.includes(time)) {
+          this.choosedTimes[time] = false;
+        }
+      });
+    },
     setClass(time) {
       return {
         free: time in this.choosedTimes && this.choosedTimes[time],
@@ -60,6 +64,11 @@ export default {
       this.$emit('input', this.choosedTimes[time] ? time : null);
     }
   },
+  watch: {
+    reservedTimes() {
+      this.initChoosedTimes();
+    }
+  }
 }
 </script>
 

@@ -7,6 +7,7 @@ class ReceptionController extends BaseController {
 
         this.getReception = this.getReception.bind(this);
         this.getAllReceptions = this.getAllReceptions.bind(this);
+        this.getReceptionsByPatient = this.getReceptionsByPatient.bind(this);
         this.addReception = this.addReception.bind(this);
         this.editReception = this.editReception.bind(this);
         this.removeReception = this.removeReception.bind(this);
@@ -23,6 +24,13 @@ class ReceptionController extends BaseController {
     async getAllReceptions(req, res, next) {
         this.exec(req, next, async () => {
             const receptions = await receptionService.getAllReceptions();
+            res.json(receptions);
+        });
+    }
+
+    async getReceptionsByPatient(req, res, next) {
+        this.exec(req, next, async () => {
+            const receptions = await receptionService.getReceptionsByPatient(req.params);
             res.json(receptions);
         });
     }

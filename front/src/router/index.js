@@ -7,6 +7,7 @@ Vue.use(VueRouter)
 import Signup from '../views/signup/signup';
 import Catalog from '../views/catalog/catalog';
 import CatalogDoctorCard from '../views/doctor-card/doctor-card';
+import ReceptionView from '../views/reception-view/reception-view';
 
 // Admin
 import Admin from '../views/admin/admin';
@@ -47,6 +48,11 @@ const routes = [
     path: '/signup',
     name: 'Signup',
     component: Signup,
+  },
+  {
+    path: '/reception/:receptionId?',
+    name: 'Reception',
+    component: ReceptionView,
   },
   {
     path: '/admin',

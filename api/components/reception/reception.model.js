@@ -18,7 +18,10 @@ const schema = new mongoose.Schema({
         type: mongoose.ObjectId,
         ref: 'User',
         required: true,
-    }
+    },
+    review: {
+        type: String,
+    },
 });
 
 module.exports = {

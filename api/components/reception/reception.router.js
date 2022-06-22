@@ -17,6 +17,13 @@ router.get(
 );
 
 router.get(
+  '/patient/:patientId',
+  authMiddleware,
+  ReceptionValidator.getReceptionsByPatient,
+  receptionController.getReceptionsByPatient
+);
+
+router.get(
   '/reserved/:date',
   authMiddleware,
   ReceptionValidator.getReservedTimesByDate,

@@ -7,13 +7,17 @@
       :headers="headers"
       entityName="reception"
       noRowClick
+      @rowClick="onRowClick"
     />
   </v-container>
 </template>
 
 <script>
+import TextFormatMixin from '../../../../mixins/text-format';
+
 export default {
   name: 'doctor-schedule',
+  mixins: [TextFormatMixin],
   created() {
     this.getCurrentUser()
       .then(user => {
@@ -43,19 +47,24 @@ export default {
       const month = String(today.getMonth() + 1).padStart(2, '0');
       const year = today.getFullYear();
       return `${year}-${month}-${day}`;
-    }
+    },
   },
   methods: {
-    getFullName({lastName, firstName, secondName}) {
-      return `${lastName} ${firstName[0]}.${secondName ? secondName[0] + '.' : ''}`;
-    },
     getCurrentUser() {
       return this.$axios
         .get('/user/current')
         .then(r => {
           return r.data;
         });
-    }
+    },
+    onRowClick({id}) {
+      this.$router.push({
+        name: 'Reception',
+        params: {
+          receptionId: id,
+        },
+      });
+    },
   },
 }
 </script>

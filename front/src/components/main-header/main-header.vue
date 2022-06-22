@@ -9,6 +9,13 @@
         >
           Панель администратора
         </router-link>
+        <router-link
+          v-if="isPatient"
+          :to="{name: 'Reception'}"
+          class="main-header__link"
+        >
+          Мои приемы
+        </router-link>
         <v-btn text class="ml-5 main-header__logout" @click="logout">Выйти</v-btn>
       </div>
     </v-container>
@@ -33,6 +40,9 @@ export default {
     },
     isAdmin() {
       return this?.currentUser?.role?.value === 'admin';
+    },
+    isPatient() {
+      return this?.currentUser?.role?.value === 'patient';
     },
     isNotLoginPage() {
       return this.$route.name !== 'Home';

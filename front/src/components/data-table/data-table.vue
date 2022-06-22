@@ -31,14 +31,15 @@ export default {
     },
   },
   methods: {
-    onRowClick({id}) {
+    onRowClick(data) {
+      this.$emit('rowClick', data);
       if (this.noRowClick) {
         return;
       }
       this.$router.push({
         name: `${this.entityName[0].toUpperCase() + this.entityName.slice(1)}Detail`,
         params: {
-          [`${this.entityName}Id`]: id
+          [`${this.entityName}Id`]: data.id
         }
       });
     }
